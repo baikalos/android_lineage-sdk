@@ -37,6 +37,10 @@ public final class PackageManagerUtils {
         return getApplicationInfo(context, packageName, 0) != null;
     }
 
+    public static boolean isAppInstalled(final Context context, final String packageName, final int flags) {
+        return getApplicationInfo(context, packageName, flags) != null;
+    }
+
     /**
      * Check whether a package with specific flags is enabled
      *
