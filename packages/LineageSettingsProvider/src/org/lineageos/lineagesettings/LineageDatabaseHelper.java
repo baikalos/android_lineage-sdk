@@ -543,7 +543,7 @@ public class LineageDatabaseHelper extends SQLiteOpenHelper{
 
     private void loadRestrictedNetworkingModeSetting() {
         Settings.Global.putInt(mContext.getContentResolver(),
-                Settings.Global.RESTRICTED_NETWORKING_MODE, 1);
+                Settings.Global.RESTRICTED_NETWORKING_MODE, 0);
         try {
             List<PackageInfo> packages = new ArrayList<>();
             for (UserInfo userInfo : UserManager.get(mContext).getAliveUsers()) {
