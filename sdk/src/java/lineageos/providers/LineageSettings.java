@@ -188,6 +188,9 @@ public final class LineageSettings {
                     mContentProvider = contentResolver
                             .acquireProvider(mUri.getAuthority());
                 }
+                if( mContentProvider == null ) {
+                    Log.e(TAG, "mContentProvider=null!!!", new Throwable());
+                }
                 return mContentProvider;
             }
         }
@@ -255,6 +258,13 @@ public final class LineageSettings {
          * @return The string value of the specified key.
          */
         public String getStringForUser(ContentResolver cr, String name, final int userId) {
+
+
+            if( cr == null ) {
+                Log.wtf(TAG, "cr=null, name=" + name);
+                return "";
+            }
+
             final boolean isSelf = (userId == UserHandle.myUserId());
             if (isSelf) {
                 if (LOCAL_LOGV) Log.d(TAG, "get setting for self");
@@ -280,6 +290,11 @@ public final class LineageSettings {
             }
 
             IContentProvider cp = mProviderHolder.getProvider(cr);
+
+            if( cp == null ) {
+                Log.e(TAG, "cp=null, name=" + name, new Throwable());
+                return null;
+            }
 
             // Try the fast path first, not using query().  If this
             // fails (alternate Settings provider that doesn't support

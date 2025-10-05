@@ -28,10 +28,10 @@ public class Build {
     public static final String UNKNOWN = "unknown";
 
     /** A build ID utilized to distinguish lineageos versions */
-    public static final String CRDROID_VERSION = getString("ro.crdroid.version");
+    public static final String CRDROID_VERSION = getString("ro.baikalos.version");
 
     /** A build ID string meant for displaying to the user */
-    public static final String CRDROID_DISPLAY_VERSION = getString("ro.crdroid.display.version");
+    public static final String CRDROID_DISPLAY_VERSION = getString("ro.baikalos.display.version");
 
     private static final SparseArray<String> sdkMap;
     static
@@ -57,7 +57,7 @@ public class Build {
          * Will return 0 if the device does not support the Lineage SDK.
          */
         public static final int SDK_INT = SystemProperties.getInt(
-                "ro.lineage.build.version.plat.sdk", 0);
+                "ro.baikalos.build.version.plat.sdk", 0);
     }
 
     /**

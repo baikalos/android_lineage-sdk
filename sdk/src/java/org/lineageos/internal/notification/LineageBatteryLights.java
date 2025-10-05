@@ -113,7 +113,7 @@ public final class LineageBatteryLights {
     }
 
     public void calcLights(LedValues ledValues, int level, int status, boolean low) {
-        if (true /*DEBUG*/) {
+        if (DEBUG) {
             Slog.i(TAG, "calcLights input:"
                     + " ledValues={ " + ledValues + " }"
                     + " level=" + level
@@ -132,14 +132,7 @@ public final class LineageBatteryLights {
 
         final boolean isChargingOrFull = status == BatteryManager.BATTERY_STATUS_CHARGING ||
                 status == BatteryManager.BATTERY_STATUS_FULL;
-        final boolean isCharged = status == BatteryManager.BATTERY_STATUS_FULL; // || level >= 100;
-
-        Slog.i(TAG, "calcLights calc:"
-                    + " isChargingOrFull=" + isChargingOrFull
-                    + " isCharged=" + isChargingOrFull
-                    + " status=" + status
-                    + " level=" + level);
-
+        final boolean isCharged = status == BatteryManager.BATTERY_STATUS_FULL; 
 
         // The only meaningful ledValues values received by frameworks BatteryService
         // are the pulse times (for low battery). Explicitly set enabled state and
