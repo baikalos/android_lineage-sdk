@@ -120,6 +120,24 @@ public class ChargingControlController extends LineageHealthFeature {
                 Log.wtf(TAG, "No charging control provider is supported");
             }
         }
+
+        try {
+        IntentFilter baikalFilter = new IntentFilter("com.android.internal.baikalos.Actions.ACTION_CHARGING_MODE_CHANGED");
+
+            // Register a one-time receiver that resets internal state on power
+            // disconnection
+            mContext.registerReceiver(new BroadcastReceiver() {
+                @Override
+                public void onReceive(Context context, Intent intent) {
+                    int modeStatus = intent.getIntExtra("com.android.internal.baikalos.Actions.EXTRA_INT_MODE", 0);
+                    Log.i(TAG, "BaikalOS Charging Mode Changed:" + modeStatus);
+                    if( mToggle != null ) mToggle.onChangeOverrideMode(modeStatus);
+                }
+            }, baikalFilter, Context.RECEIVER_EXPORTED);
+        } catch(Exception e ) {
+            Log.i(TAG, "BaikalOS Charging Mode Receiver registration failed:", e);
+        }
+
     }
 
     @Override
