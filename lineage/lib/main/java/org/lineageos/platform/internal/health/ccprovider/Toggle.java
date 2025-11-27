@@ -38,6 +38,9 @@ public class Toggle extends ChargingControlProvider {
     private long mSavedTargetTime;
     private long mEstimatedFullTime;
     private chgCtrlStage mStage = chgCtrlStage.STAGE_NONE;
+    
+    private int mOverrideMode;
+    private boolean mCurrentMode = true;
 
     private enum chgCtrlStage {
         /**
@@ -70,12 +73,12 @@ public class Toggle extends ChargingControlProvider {
 
         boolean isBypassSupported = isHALModeSupported(
                 ChargingControlSupportedMode.BYPASS | ChargingControlSupportedMode.TOGGLE);
-        if (!isBypassSupported) {
+        //if (!isBypassSupported) {
             mChargingLimitMargin = mContext.getResources().getInteger(
                     R.integer.config_chargingControlBatteryRechargeMargin);
-        } else {
-            mChargingLimitMargin = 1;
-        }
+        //} else {
+        //    mChargingLimitMargin = 1;
+        //}
         Log.i(TAG, "isBypassSupported: " + isBypassSupported);
 
         mChargingTimeMargin = mContext.getResources().getInteger(
@@ -89,7 +92,7 @@ public class Toggle extends ChargingControlProvider {
 
     @Override
     public boolean requiresBatteryLevelMonitoring() {
-        return !isHALModeSupported(ChargingControlSupportedMode.BYPASS);
+        return true; //!isHALModeSupported(ChargingControlSupportedMode.BYPASS);
     }
 
     @Override
@@ -196,11 +199,27 @@ public class Toggle extends ChargingControlProvider {
         return onStage(mStage);
     }
 
+    public void onChangeOverrideMode(int override) {
+        if( override != mOverrideMode ) {
+            mOverrideMode = override;
+            Log.e(TAG, "BaikalOS Charging override mode changed:" + mOverrideMode);
+        }
+        setChargingEnabled(mCurrentMode);
+    }
+
     private boolean setChargingEnabled(boolean enabled) {
         try {
+            Log.e(TAG, "BaikalOS Charging current state:" + mChargingControl.getChargingEnabled() + ", virtual state=" + mCurrentMode);
+            mCurrentMode = enabled;
+            if( mOverrideMode != 0 ) {
+                Log.e(TAG, "BaikalOS Charging override true");
+                enabled = false;
+            }
             if (mToggleSetAlways) {
+                Log.e(TAG, "BaikalOS Charging force Enabled:" + enabled);
                 mChargingControl.setChargingEnabled(enabled);
             } else if (mChargingControl.getChargingEnabled() != enabled) {
+                Log.e(TAG, "BaikalOS Charging Enabled:" + enabled);
                 mChargingControl.setChargingEnabled(enabled);
             }
             return true;

@@ -27,12 +27,12 @@ public class Limit extends ChargingControlProvider {
         super(context, chargingControl);
 
         boolean isBypassSupported = isHALModeSupported(ChargingControlSupportedMode.BYPASS);
-        if (!isBypassSupported) {
+        //if (!isBypassSupported) {
             mChargingLimitMargin = mContext.getResources().getInteger(
                     R.integer.config_chargingControlBatteryRechargeMargin);
-        } else {
-            mChargingLimitMargin = 1;
-        }
+        //} else {
+        //    mChargingLimitMargin = 1;
+        //}
         Log.i(TAG, "isBypassSupported: " + isBypassSupported);
     }
 
@@ -83,7 +83,7 @@ public class Limit extends ChargingControlProvider {
 
     @Override
     public boolean requiresBatteryLevelMonitoring() {
-        return !isHALModeSupported(ChargingControlSupportedMode.BYPASS);
+        return true; //!isHALModeSupported(ChargingControlSupportedMode.BYPASS);
     }
 
     @Override

@@ -5,7 +5,7 @@
      SPDX-License-Identifier: Apache-2.0
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="lineageos_system_label">crDroid-system</string>
+    <string name="lineageos_system_label">BaikalOS-system</string>
     <string name="permlab_modifyProfiles">endra systemprofilar</string>
     <string name="permdesc_modifyProfiles">Lèt ein app endra systemprofilar.</string>
     <string name="permlab_useHardwareFramework">bruka rammeverk for maskinvare</string>
